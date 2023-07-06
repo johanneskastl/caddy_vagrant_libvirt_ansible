@@ -1,0 +1,17 @@
+---
+- name: 'Install and configure caddy'
+  hosts: 'all'
+  gather_facts: true
+  become: true
+
+  roles:
+    - role: 'caddy_ansible.caddy_ansible'
+      caddy_user: wwwrun
+      caddy_config: |
+        http://{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:8080
+        respond /* 200 {
+            body "Hello vagrant-libvirt setup!
+        "
+            close
+        }
+
